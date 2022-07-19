@@ -31,4 +31,14 @@ public class BankStatementAnalyzer {
         System.out.println("The total salary received is " 
         + bankStatementProcessor.calculateTotalForCategory("Salary"));
     }
+
+    public void analyze(final String fileName, final TransactionCSVParser bankStatementParser2) throws IOException {
+        final Path path = Paths.get(RESOURCES + fileName);
+        final List<String> lines = Files.readAllLines(path);
+
+        final List<BankTransaction> bankTransactions = bankStatementParser2.parseLinesFromCSV(lines);
+        
+        final BankStatementProcessor bankStatementProcessor = new BankStatementProcessor(bankTransactions);
+        collectSummary(bankStatementProcessor);
+    }
 }
